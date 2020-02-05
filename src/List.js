@@ -26,3 +26,8 @@ export default function List(props) {
     </section>
   )
 }
+
+List.defaultProps = {
+  header: 'no list found',
+  cards: []
+};

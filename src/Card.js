@@ -15,6 +15,9 @@ export default function Card(props) {
   )
 }
 
+
+
+
 // class Card extends React.Component {
 // 	render() {
 // 		<div className="Card">
