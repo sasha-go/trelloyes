@@ -2,7 +2,8 @@ import React from 'react';
 import Card from './Card'
 import './List.css';
 
-export default function List(props) {
+function List(props) { 
+  
   return (
     <section className='List'>
       <header className='List-header'>
@@ -12,11 +13,15 @@ export default function List(props) {
         {props.cards.map((card) =>
           <Card
             key={card.id}
+            cardId={card.id}
+            listId={props.listId}
             title={card.title}
             content={card.content}
+            deleteButtonHandler={props.deleteButtonHandler}
           />
         )}
         <button
+          onClick={(e) => props.randomButtonHandler(props.listId)}
           type='button'
           className='List-add-button'
         >
@@ -31,3 +36,5 @@ List.defaultProps = {
   header: 'no list found',
   cards: []
 };
+
+export default List;
