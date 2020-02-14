@@ -6,16 +6,7 @@ import './App.css';
 import STORE from './STORE';
 
 
-//Helper function from module for randomButtonHandler 
-const newRandomCard = () => {
-  const id = Math.random().toString(36).substring(2, 4)
-    + Math.random().toString(36).substring(2, 4);
-  return {
-    id,
-    title: `Random Card ${id}`,
-    content: 'lorem ipsum',
-  }
-}
+
 
 //Helper function from module for deleteButtonHandler
 function omit(obj, keyToOmit) {
@@ -26,33 +17,44 @@ function omit(obj, keyToOmit) {
   );
 }
 
-
 class App extends Component {
   constructor(props) {
     super(props) 
     this.state = { 
       store: STORE
     }
-    console.log(this.state);
+  }
+
+  //Helper function from module for randomButtonHandler 
+  newRandomCard = () => {
+    const id = Math.random().toString(36).substring(2, 4)
+      + Math.random().toString(36).substring(2, 4);
+    return {
+      id,
+      title: `Random Card ${id}`,
+      content: 'lorem ipsum',
+    }
   }
 
   deleteButtonHandler = (listId, cardId) => {
-    console.log(cardId);
-    console.log(listId);
-    const { lists, allCards} = this.state.store;
-    console.log('all cards', allCards);
+    const { lists, allCards } = this.state.store;
+    const newLists = lists.map(list => {
+      if (list.id === listId) {
+        list.cardIds = list.cardIds.filter(id => id !== cardId);
+      }
+      return list;
+    });
+
     // filter method to remove card from list
     // const newList = [...lists];
     // const newCard = lists.cardIds.filter(id => id !== cardId);
 
-    const newLists = lists.map(list => ({...list,
-      cardIds: list.cardIds.filter(id => id !== cardId)
-      })
-    );
+    // const newLists = lists.map(list => ({...list,
+    //   cardIds: list.cardIds.filter(id => id !== cardId)
+    //   })
+    // );
     
-    // const newCards = omit(allCards, 'l');
-
-
+    // const newCards = omit(lists, cardId);
     // console.log('new cards', newCards);
 
     this.setState({
@@ -63,19 +65,33 @@ class App extends Component {
     })
   }
 
-
-  randomButtonHandler(listId) {
+  randomButtonHandler = (listId) => {
     console.log(listId);
-    // console.log(listId);
-    // const newState = [...this.state.store, newRandomCard];
-    // //const newList = // add id to the list you clicked on
-    // this.setState({
-    //   store: newState,
-    // })
+    const randomCard = this.newRandomCard();
+    console.log(randomCard);
+    const { lists, allCards } = this.state.store;
+
+    let newAllCards = allCards;
+    newAllCards[randomCard.id] = randomCard;
+    
+    const newLists = lists.map(list => {
+      if (list.id === listId) {
+        list.cardIds.push(randomCard.id);
+      }
+      return list;
+    });
+
+    this.setState({
+      store: {
+        lists: newLists,
+        allCards: newAllCards
+      }
+    })
   };
   
   render() {
     const { store } = this.state
+    console.log(store.lists);
 
     return (
       <main className='App'>

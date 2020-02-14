@@ -9,7 +9,7 @@ class Card extends React.Component {
       <div className='Card'>
       <button
         type='button'
-        onClick={(e) => this.props.deleteButtonHandler(this.props.cardId, this.props.listId)}
+        onClick={(e) => this.props.deleteButtonHandler(this.props.listId, this.props.cardId)}
       >
         delete
       </button>

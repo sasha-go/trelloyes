@@ -21,7 +21,7 @@ function List(props) {
           />
         )}
         <button
-          onClick={(e) =>props.randomButtonHandler(props.listId)}
+          onClick={(e) => props.randomButtonHandler(props.listId)}
           type='button'
           className='List-add-button'
         >
