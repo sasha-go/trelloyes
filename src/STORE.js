@@ -1,5 +1,6 @@
 
 const STORE = {
+  // cardCount: 'n',
   lists: [
     {
       id: '1',
